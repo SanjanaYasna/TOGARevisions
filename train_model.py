@@ -9,7 +9,7 @@ from sklearn.model_selection import cross_val_score
 import joblib
 from constants import Constants
 from version import __version__
-
+#using xgboost-0.81-py2.py3-none-manylinux1_x86_64.whl, not default version
 
 __author__ = "Bogdan Kirilenko, 2020."
 __email__ = "bogdan.kirilenko@senckenberg.de"
@@ -24,7 +24,7 @@ def train_on(x, y, save_to, name=None):
     learning_rate = 0.1
     # create and fit the model, also add cross-validation
     model = xgb.XGBClassifier(
-        n_estimators=n_trees, max_depth=max_depth, learning_rate=learning_rate
+        n_estimators=n_trees, max_depth=max_depth, learning_rate=learning_rate, tree_method = gpu_hist
     )
     kfold = StratifiedKFold(n_splits=5, random_state=777, shuffle=True)
     results = cross_val_score(model, x, y, cv=kfold)
